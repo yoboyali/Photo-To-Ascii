@@ -4,6 +4,7 @@
 #include "stb_image.h"
 #include <string.h>
 #include <unistd.h>
+#define BrightnessVal 50
 typedef struct Image{
     int Width;
     int Height;
@@ -12,6 +13,11 @@ Image image;
   const char Characters[] = " .-=+*x#$X@";
 int Height , Width , PixelSize;
 int CharacterLen = sizeof(Characters) - 1;
+int Brightness(int x){
+    x += BrightnessVal;
+    if(x > 255){x = 255;}
+    return x ;
+}
 void CreateImage(unsigned char *ImageData){
     printf("\x1b[2J");
     unsigned char *Pixels = ImageData;
@@ -22,7 +28,7 @@ void CreateImage(unsigned char *ImageData){
        unsigned char b = *Pixels++;
        if(PixelSize >= 4){unsigned char a = *Pixels++;}
        float Average = (r + g + b) / 3.0;
-       int CharIndex = (int)((Average / 200) * CharacterLen);
+       int CharIndex = (int)((Average / 255) * CharacterLen - 1);
        printf("\33[38;2;%d;%d;%dm%c" , r , g , b ,Characters[CharIndex]);
       // putchar(Characters[CharIndex]);
        usleep(100);
@@ -46,7 +52,7 @@ void Resize(unsigned char *ImageData, int OriginalHeight , int OriginalWidth , i
             unsigned char r = ImageData[PixelIndex + 0];
             unsigned char g = ImageData[PixelIndex + 1];
             unsigned char b = ImageData[PixelIndex + 2];
-            if(PixelSize >= 4){unsigned char a = Pixels[PixelIndex + 3];}
+            if(PixelSize >= 4){unsigned char a = ImageData[PixelIndex + 3];}
             Ravg += r;
             Gavg += g;
             Bavg += b;
@@ -56,6 +62,9 @@ void Resize(unsigned char *ImageData, int OriginalHeight , int OriginalWidth , i
         Ravg /= Block * (2*Block);
         Gavg /= Block * (2*Block);
         Bavg /= Block * (2*Block);
+        Ravg = Brightness(Ravg);
+        Gavg = Brightness(Gavg);
+        Bavg = Brightness(Bavg);
       int index = (H * image.Width + W) * PixelSize;
       NewImage[index + 0] = Ravg;
       NewImage[index + 1] = Gavg;
