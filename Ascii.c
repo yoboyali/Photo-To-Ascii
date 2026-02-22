@@ -30,7 +30,7 @@ void CreateImage(unsigned char *ImageData){
        float Average = (r + g + b) / 3.0;
        int CharIndex = (int)((Average / 255) * CharacterLen - 1);
        printf("\33[38;2;%d;%d;%dm%c" , r , g , b ,Characters[CharIndex]);
-      // putchar(Characters[CharIndex]);
+     // putchar(Characters[CharIndex]);
        usleep(100);
       }
       putchar('\n');
@@ -83,17 +83,15 @@ void Resize(unsigned char *ImageData, int OriginalHeight , int OriginalWidth , i
 int main(int argc , char *argv[]){
 unsigned char *ImageData = stbi_load(argv[1] , &Width , &Height , &PixelSize , 0); 
 int Down;
-while (1) {
-  printf("By what factor do you want to downscale you picture?\n");
-  scanf("%d" , &Down);
-  if(Down > 0 && Down <= 1000){break;}
-}
-  if(ImageData){
+  if(ImageData){  
+    printf("By what factor do you want to downscale you picture?\n");
+    scanf("%d" , &Down);
+  if(Down < 0 || Down >= 1000 ){
+    printf("Invalid input , Exiting...");
+    return 0;;}
     Resize(ImageData, Height, Width , Down);
-//    CreateImage(ImageData);
   }
   else{
-    printf("is this working?");
     printf("Failed to load image %s\n" , argv[1]);
   }
 
