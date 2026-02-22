@@ -1,7 +1,7 @@
 # Photo To Ascii
 This terminal program uses the stb_image library to convert any image to Ascii Art!!
 
-<img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/Cat-Ascii.png"/><img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/Cat2.jpg"/>
+<img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/cover.png"/>
 
 ## How It Works
 
@@ -43,7 +43,8 @@ printf("\33[38;2;%d;%d;%dm%c]" , r , g , b ,Characters[CharIndex]);
 This allows the ASCII characters to retain the original pixel color.
 
 Note: RGB ANSI escape codes require a terminal that supports 24-bit true color.
-<img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/Supra-Ascii.png"/><img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/Supra.jpg"/>
+
+<img src="https://github.com/yoboyali/Photo-To-Ascii/blob/main/Assets/cover2.png"/>
 
 ## Running the Program
 
