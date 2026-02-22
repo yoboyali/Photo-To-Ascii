@@ -4,13 +4,13 @@
 #include "stb_image.h"
 #include <string.h>
 #include <unistd.h>
-#define BrightnessVal 50
+#define BrightnessVal 100
 typedef struct Image{
     int Width;
     int Height;
 }Image;
 Image image;
-  const char Characters[] = " .-=+*x#$X@";
+  const char Characters[] = "    .-=+*x#$X@";
 int Height , Width , PixelSize;
 int CharacterLen = sizeof(Characters) - 1;
 int Brightness(int x){
@@ -29,7 +29,7 @@ void CreateImage(unsigned char *ImageData){
        if(PixelSize >= 4){unsigned char a = *Pixels++;}
        float Average = (r + g + b) / 3.0;
        int CharIndex = (int)((Average / 255) * CharacterLen - 1);
-       printf("\33[38;2;%d;%d;%dm%c]" , r , g , b ,Characters[CharIndex]);
+       printf("\33[38;2;%d;%d;%dm%c" , r , g , b ,Characters[CharIndex]);
      // putchar(Characters[CharIndex]);
        usleep(100);
       }
